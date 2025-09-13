@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quest</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Montserrat Font (Modern) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    /* === Global === */
+    body {
+      background: linear-gradient(135deg, #181c25 0%, #3a445d 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #eaf0fa;
+      min-height: 100vh;
+      letter-spacing: 0.01em;
+    }
+    ::selection { background: #3cf6c7; color: #111; }
+
+    /* Glassmorphism Container */
+    .glass {
+      background: rgba(30, 36, 50, 0.77);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.21);
+      border: 1.3px solid rgba(70,255,244,0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* === Header === */
+    header {
+      background: linear-gradient(90deg, #3cf6c7 0%, #ff5e62 100%);
+      color: #181c25;
+      padding: 2.7rem 0 1.4rem 0;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 6px 38px 0 rgba(60,246,199,0.10);
+    }
+    header h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 2.7rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2em;
+      text-shadow: 0 2px 10px #fff5, 0 1px 0 #0002;
+    }
+    header p {
+      color: #1e1e1f;
+      font-size: 1.15rem;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    /* === Hero Section === */
+    .hero-glass {
+      margin-top: -40px;
+      padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+      border-radius: 30px;
+      background: rgba(40,48,71,0.79);
+      box-shadow: 0 8px 40px 0 rgba(60,246,199,0.08);
+      border: 1.5px solid rgba(60,246,199,0.14);
+    }
+    .hero-glass h3 {
+      color: #3cf6c7;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      font-size: 2.1rem;
+    }
+    .hero-glass .lead {
+      color: #eaf6fa;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    /* === Glass Cards & Features === */
+    .glass-card {
+      background: rgba(60,246,199,0.13);
+      border: 1.3px solid rgba(60,246,199,0.18);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(60,246,199,0.04), 0 1.5px 1.5px #fff1;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 20px;
+      transition: transform 0.12s;
+    }
+    .glass-card:hover {
+      transform: scale(1.025);
+      border-color: #3cf6c7;
+      box-shadow: 0 8px 40px 0 rgba(60,246,199,0.18);
+    }
+    .glass-card img {
+      border-radius: 16px;
+      box-shadow: 0 2px 18px #3cf6c74f;
+      margin-bottom: 0.7rem;
+    }
+    .glass-card .text-warning {
+      color: #ffef80 !important;
+      text-shadow: 0 0.5px 4px #1113;
+    }
+
+    /* === Buttons === */
+    .btn {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      border-radius: 16px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      box-shadow: 0 2px 12px rgba(60,246,199,0.10);
+      transition: all 0.17s cubic-bezier(.55,.12,.53,.94);
+      outline: none !important;
+      border: none;
+    }
+    .btn-lg { font-size: 1.15rem; }
+    .btn-primary {
+      background: linear-gradient(90deg, #3cf6c7 0%, #6e8efb 100%);
+      color: #1a1a1a;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background: linear-gradient(90deg, #2bd7a5 0%, #4e70e6 100%);
+      color: #fff;
+      transform: translateY(-2px) scale(1.045);
+      box-shadow: 0 2px 16px #3cf6c780;
+    }
+    .btn-warning {
+      background: linear-gradient(90deg, #ffe680 0%, #ff5e62 100%);
+      color: #212121;
+    }
+    .btn-warning:hover { background: linear-gradient(90deg, #fff456 0%, #ff9b6a 100%); color: #181c25; }
+    .btn-success {
+      background: linear-gradient(90deg, #39e18a 0%, #36c9e1 100%);
+      color: #191c1f;
+    }
+    .btn-success:hover { background: linear-gradient(90deg, #1ecb6a 0%, #12b6db 100%); color: #fff; }
+    .btn-info {
+      background: linear-gradient(90deg, #4e8fff 0%, #3cf6c7 100%);
+      color: #181c25;
+    }
+    .btn-info:hover { background: linear-gradient(90deg, #4e7cfb 0%, #1be6c7 100%); color: #fff; }
+    .btn-danger {
+      background: linear-gradient(90deg, #ff5e62 0%, #ff9966 100%);
+      color: #fff;
+    }
+    .btn-danger:hover { background: linear-gradient(90deg, #ff3c44 0%, #ffb386 100%); color: #191c1f; }
+
+    /* === Modal === */
+    .modal-content {
+      border-radius: 20px;
+      background: rgba(30, 36, 50, 0.96)!important;
+      box-shadow: 0 8px 40px rgba(60,246,199,0.14);
+      border: 1.5px solid #3cf6c733;
+      backdrop-filter: blur(8.5px);
+    }
+    .modal-header { border-bottom: 1.5px solid #3cf6c733; }
+    .modal-title { color: #3cf6c7; font-weight: 800; }
+
+    /* === Content Creator Modal Custom === */
+    .creator-list-btn {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      background: rgba(60,246,199,0.08);
+      color: #3cf6c7;
+      border: 1.5px solid #3cf6c733;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 12px 16px;
+      text-align: left;
+      transition: background 0.18s, border 0.19s;
+    }
+    .creator-list-btn.active, .creator-list-btn:hover {
+      background: linear-gradient(90deg, #3cf6c7 0%, #6e8efb 100%);
+      color: #181c25 !important;
+      border-color: #3cf6c7;
+    }
+    .creator-profile-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 3px solid #3cf6c7;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 26px #3cf6c711;
+      transition: transform 0.18s, border-color 0.22s;
+      cursor: pointer;
+    }
+    .creator-profile-img:hover {
+      transform: scale(1.07);
+      border-color: #ff5e62;
+    }
+    .creator-desc {
+      font-size: 1rem;
+      color: #d7eafc;
+      margin-bottom: 0.5em;
+      font-weight: 500;
+    }
+    .creator-links a {
+      color: #3cf6c7;
+      font-size: 1.3rem;
+      text-decoration: none;
+      margin: 0 5px;
+      transition: color 0.15s;
+    }
+    .creator-links a:hover { color: #ff5e62; }
+
+    /* === Feature Collapsible === */
+    .feature-collapse-btn {
+      background: rgba(60,246,199,0.12);
+      color: #3cf6c7;
+      border: 1.5px solid #3cf6c733;
+      font-weight: 800;
+      font-size: 1.09rem;
+      border-radius: 14px;
+      transition: background 0.16s;
+    }
+    .feature-collapse-btn:hover { background: #3cf6c7; color: #181c25; }
+
+    /* === Footer === */
+    footer {
+      background: linear-gradient(90deg, #3cf6c7 0%, #ff5e62 100%);
+      color: #111;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      font-weight: 700;
+      font-size: 0.99rem;
+      letter-spacing: 0.04em;
+      box-shadow: 0 -2px 16px #3cf6c766;
+      margin-top: 60px;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 700px) {
+      .hero-glass { padding: 1.1rem 0.7rem; }
+      .glass-card { padding: 0.7rem 0.7rem; }
+      .creator-profile-img { width: 95px; height: 95px; }
+    }
+    @media (max-width: 575px) {
+      header h1 { font-size: 2rem; }
+      .hero-glass h3 { font-size: 1.2rem; }
+      .glass-card { margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="text-center">
+    <h1>🎮 Rewind Private Server 🎮</h1>
+    <p>A Best Growtopia Private Server Experience</p>
+  </header>
+  <!-- Hero Section -->
+  <section class="container hero-glass mt-4 mb-5">
+    <div class="row align-items-center justify-content-center">
+      <!-- Welcome text -->
+      <div class="col-md-6 mb-4 mb-md-0 text-center text-md-start">
+        <h3 class="mb-4">Welcome to RewindPS</h3>
+        <p class="lead">
+          🎮✨ A Growtopia Private Server will grant your dream come true 
+        </p>
+        <a href="https://discord.gg/W8MtQuakkk" target="_blank" class="btn btn-lg btn-primary mt-3 shadow">
+          💬 Join Our Discord Community
+        </a>
+        <div class="mt-4">
+          <button class="btn btn-lg btn-warning shadow" data-bs-toggle="modal" data-bs-target="#contentCreatorModal">
+            🌟 Founder
+          </button>
+        </div>
+      </div>
+      <!-- WOTD Box -->
+      <div class="col-md-5">
+        <div class="glass-card text-center p-2">
+          <img src="LUFFY.png" alt="World of the Day"
+               class="img-fluid rounded shadow"
+               data-bs-toggle="modal" data-bs-target="#wotdModal"
+               style="cursor:pointer;">
+          <div class="card-body p-2">
+            <p class="mt-2 small text-warning text-center">🏆 World of the Day Winner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Creator Modal -->
+  <div class="modal fade" id="contentCreatorModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🌟 Featured Founder and Staff</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Creator List -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0">
+              <div id="creatorList" class="d-flex flex-column gap-2">
+                <button class="creator-list-btn active" data-index="0">Vonuster</button>
+                <button class="creator-list-btn" data-index="1">0</button>
+                <button class="creator-list-btn" data-index="2">0</button>
+                <button class="creator-list-btn" data-index="3">0</button>
+                <button class="creator-list-btn" data-index="4">0</button>
+              </div>
+            </div>
+            <!-- Creator Detail -->
+            <div class="col-12 col-md-8">
+              <div id="creatorDetail" class="text-center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WOTD Modal -->
+  <div class="modal fade" id="wotdModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title">🌍 World of the Day</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <img src="LUFFY.png" alt="WOTD World" class="img-fluid rounded shadow mb-3">
+          <h6>👤 Owner: <span class="text-warning">UBISOFT</span></h6>
+          <p class="fst-italic">"Time is Gold"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="container mb-5 text-center">
+    <h3 class="mb-4" style="color:#3cf6c7;font-weight:800;">🌟 Features</h3>
+    <button class="btn btn-lg feature-collapse-btn mb-3" data-bs-toggle="collapse" data-bs-target="#featuresList">
+      📖 Show Features
+    </button>
+    <div class="collapse" id="featuresList">
+      <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#farmModal">🌾 Farm</button>
+        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#plantModal">👾 Custom Items</button>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#questModal">📜 Quest</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Play -->
+  <section class="container mb-5 text-center">
+    <h3 class="mb-4" style="color:#6e8efb;font-weight:800;">📖 How to Play</h3>
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <button class="btn btn-lg btn-primary w-100" data-bs-toggle="modal" data-bs-target="#androidModal">📱 Android</button>
+      </div>
+      <div class="col-6 col-md-3">
+        <button class="btn btn-lg btn-success w-100" data-bs-toggle="modal" data-bs-target="#windowsModal">💻 Windows</button>
+      </div>
+      <div class="col-6 col-md-3">
+        <button class="btn btn-lg btn-danger w-100" data-bs-toggle="modal" data-bs-target="#iosModal">🍏 iOS</button>
+      </div>
+      <div class="col-6 col-md-3">
+        <button class="btn btn-lg btn-warning w-100" data-bs-toggle="modal" data-bs-target="#macModal">🍎 Mac</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modals for Features and Setup -->
+  <div class="modal fade" id="farmModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title">🌾 Farming</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Farm resources and grow your wealth step by step.</p>
+          <video src="farm.mp4" class="img-fluid rounded shadow" controls loop muted poster="farm.jpg"></video>
+          <p class="mt-2 small text-muted">Replace <code>farm.mp4</code> with your own video.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="plantModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title">👾 Custom Items</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>We have our own Custom Items.</p>
+          <video src="citem.mp4" class="img-fluid rounded shadow" controls loop muted poster="plant.jpg"></video>
+          <p class="mt-2 small text-muted">Replace <code>citem.mp4</code> with your own video.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="questModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title">📜 Quest System</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Complete quests, earn rewards, and rise to the top!</p>
+          <video src="quest2.mp4" class="img-fluid rounded shadow" controls loop muted poster="quest.jpg"></video>
+          <p class="mt-2 small text-muted">Replace <code>quest2.mp4</code> with your own video.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Android Modal -->
+  <div class="modal fade" id="androidModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">📱 Android Setup</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-start">
+          <ol>
+            <li>Download Virtual Hosts 
+              <a href="https://www.apkmirror.com/apk/xfalcon/virtual-hosts/virtual-hosts-2-1-0-release/virtual-hosts-2-1-0-android-apk-download/" target="_blank">[Download]</a>
+            </li>
+            <li>Install Virtual Hosts on your device</li>
+            <li>Download hosts file 
+              <a href="https://www.mediafire.com/file/bic9t31xe47s0y2/Rewindpshost.txt/file" target="_blank">Rewindpshost.txt</a>
+            </li>
+            <li>Open Virtual Hosts → Select hosts file → Enable it</li>
+            <li>Done! Server name: <strong>Quest</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Windows Modal -->
+  <div class="modal fade" id="windowsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">💻 Windows Setup</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-start">
+          <ol>
+            <li>Press <kbd>Win + R</kbd>, type <code>C:\Windows\System32\drivers\etc</code></li>
+            <li>Edit file <strong>hosts</strong> with Notepad</li>
+            <li>Add these lines:
+              <pre class="bg-secondary p-2 rounded mt-2">
+51.83.61.89 www.growtopia1.com
+51.83.61.89 www.growtopia2.com
+              </pre>
+            </li>
+            <li>Save file → Launch Growtopia</li>
+            <li>Server name: <strong>Quest</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- iOS Modal -->
+  <div class="modal fade" id="iosModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🍏 iOS Setup</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-start">
+          <ol>
+            <li>Download Surge 5 from App Store</li>
+            <li>Click Default.conf → Import Profile → Paste URL:
+              <a href="https://gtpshost.com/ios/RewindGTPS" target="_blank">iOS Host</a>
+            </li>
+            <li>Allow VPN setup → Open Growtopia</li>
+            <li>Server name: <strong>Quest</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mac Modal -->
+  <div class="modal fade" id="macModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🍎 Mac Setup</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Edit <code>/etc/hosts</code> file just like Windows and add the same IP addresses. 
+            Save → Launch Growtopia → Connect to <strong>Quest</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="text-center py-3 mt-5">
+    © 2025 RewindPS Server. All rights reserved.
+  </footer>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/2a4b95aeba.js" crossorigin="anonymous"></script>
+  <script>
+    // Content Creator Data
+    const creators = [
+      {
+        name: "Vonuster",
+        desc: "Owner Of Rewind PS",
+        img: "qwes.png",
+        link: "",
+        linkType: "your link acc any"
+      },
+      {
+        name: "DimasGT",
+        desc: "DimasGT covers everything from world showcases to event news and Growtopia updates. His energetic style and in-game guides make him a favorite for both casual and competitive players.",
+        img: "creator2.jpg",
+        link: "https://www.tiktok.com/@dimasgt",
+        linkType: "TikTok"
+      },
+      {
+        name: "MrPixel",
+        desc: "Pixel art, world design, and community events are MrPixel's specialties. Follow him for pixel-perfect builds, design inspiration, and creative contests!",
+        img: "creator3.jpg",
+        link: "https://www.youtube.com/@mrpixel",
+        linkType: "YouTube"
+      },
+      {
+        name: "FrostyYT",
+        desc: "FrostyYT brings meme edits, funny moments, and challenge videos to the Growtopia community. Laugh and learn with his lighthearted style and meme-filled content.",
+        img: "creator4.jpg",
+        link: "https://www.tiktok.com/@frostyyt",
+        linkType: "TikTok"
+      },
+      {
+        name: "ZenoPlayz",
+        desc: "ZenoPlayz is all about PvP, speed runs, and world records. If you want to see high-skill gameplay and epic quest completions, don't miss his content!",
+        img: "creator5.jpg",
+        link: "https://www.youtube.com/@zenoplayz",
+        linkType: "YouTube"
+      }
+    ];
+    function renderCreatorDetail(index) {
+      const c = creators[index];
+      let icon = '';
+      if (c.linkType === "YouTube") icon = '<i class="fab fa-youtube"></i>';
+      if (c.linkType === "TikTok") icon = '<i class="fab fa-tiktok"></i>';
+      document.getElementById('creatorDetail').innerHTML = `
+        <h4 class="fw-bold mb-3">${c.name}</h4>
+        <img src="${c.img}" alt="${c.name}" class="creator-profile-img mb-2" style="cursor:pointer" onclick="window.open('${c.link}', '_blank')">
+        <div class="creator-desc mb-2">${c.desc}</div>
+        <div class="creator-links">
+          <a href="${c.link}" target="_blank">${icon} ${c.linkType}</a>
+        </div>
+      `;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCreatorDetail(0);
+      document.getElementById('creatorList').addEventListener('click', function(e) {
+        if (e.target.matches('.creator-list-btn')) {
+          const idx = parseInt(e.target.getAttribute('data-index'), 10);
+          document.querySelectorAll('.creator-list-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          renderCreatorDetail(idx);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
